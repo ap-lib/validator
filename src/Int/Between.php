@@ -13,7 +13,7 @@ class Between extends AbstractInt
         public ?int   $max = null,
         public string $message_between = "must be between '{min}' and '{max}'",
         public string $message_only_min = "must be equal or greater then '{min}'",
-        public string $message_only_max = "must be equal or greater then '{max}'",
+        public string $message_only_max = "must be equal or less then '{max}'",
     )
     {
     }

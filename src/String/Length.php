@@ -15,7 +15,7 @@ class Length extends AbstractString
         public ?string $mb_encoding = null,
         public string  $message_between = "length must be between '{min}' and '{max}'",
         public string  $message_only_min = "length must be equal or greater then '{min}'",
-        public string  $message_only_max = "length must be equal or greater then '{max}'",
+        public string  $message_only_max = "length must be equal or less then '{max}'",
     )
     {
     }
