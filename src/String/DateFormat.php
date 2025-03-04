@@ -10,13 +10,13 @@ use DateTimeImmutable;
 class DateFormat extends AbstractString
 {
     /**
-     * @param int|null $format The expected date format.
-     *                         See: https://www.php.net/manual/en/datetimeimmutable.createfromformat.php
+     * @param string $format The expected date format.
+     *                       See: https://www.php.net/manual/en/datetimeimmutable.createfromformat.php
      * @param string $message The error message if validation fails.
      *                        The placeholder '{format}' will be replaced with the expected format.
      */
     public function __construct(
-        public ?int   $format = null,
+        public string $format = 'Y-m-d',
         public string $message = "date does not match the required format '{format}'",
     )
     {
