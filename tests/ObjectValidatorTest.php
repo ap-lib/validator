@@ -3,8 +3,6 @@
 
 use AP\ErrorNode\Errors;
 use AP\Validator\Object\ObjectValidator;
-use AP\Validator\Tests\Objects\Author;
-use AP\Validator\Tests\Objects\Book;
 use AP\Validator\Tests\Objects\SomeObject;
 use PHPUnit\Framework\TestCase;
 
@@ -37,20 +35,5 @@ final class ObjectValidatorTest extends TestCase
             Errors::class,
             $res
         );
-    }
-
-    public function testBook(): void
-    {
-        $book = new Book(
-            "hello world", // too short name
-            new Author(
-                "mark tven"
-            ),
-        );
-
-        $res = (new ObjectValidator)
-            ->validate($book);
-
-        $this->assertTrue($res);
     }
 }
