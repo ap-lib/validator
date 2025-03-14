@@ -6,6 +6,7 @@ namespace AP\Validator\Object;
 use AP\ErrorNode\Errors;
 use AP\Scheme\Validation;
 use AP\Validator\ValidatorInterface;
+use Error;
 use ReflectionClass;
 
 class ObjectValidator extends AbstractObject
@@ -49,7 +50,19 @@ class ObjectValidator extends AbstractObject
                 if (is_subclass_of($attribute->getName(), ValidatorInterface::class)) {
                     $validator = $attribute->newInstance();
                     if ($validator instanceof ValidatorInterface) {
-                        $validateRes = $validator->validate($obj->$name);
+                        try {
+                            $validateRes = $validator->validate($obj->$name);
+                        } catch (Error $e) {
+                            if (str_starts_with($e->getMessage(), "Cannot modify readonly property")) {
+                                $v1          = $v2 = $obj->$name;
+                                $validateRes = $validator->validate($v1);
+                                if ($v1 != $v2) {
+                                    throw $e;
+                                }
+                            } else {
+                                throw $e;
+                            }
+                        }
                         if ($validateRes instanceof Errors) {
                             foreach ($validateRes->getErrors() as $error) {
                                 $error->path = array_merge($path, [$name], $error->path);
