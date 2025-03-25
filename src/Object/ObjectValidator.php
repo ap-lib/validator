@@ -16,7 +16,7 @@ class ObjectValidator extends AbstractObject
      * @param array $path
      * @return true|Errors
      */
-    final public function validateObject(object &$obj, array $path = []): true|Errors
+    public function validateObject(object &$obj, array $path = []): true|Errors
     {
         $errors = [];
 

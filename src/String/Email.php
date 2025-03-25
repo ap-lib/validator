@@ -24,7 +24,7 @@ class Email extends AbstractString
     {
     }
 
-    final public function validateString(string &$str): true|Errors
+    public function validateString(string &$str): true|Errors
     {
         return filter_var($str, FILTER_VALIDATE_EMAIL, $this->options)
             ? true

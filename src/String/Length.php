@@ -20,7 +20,7 @@ class Length extends AbstractString
     {
     }
 
-    final public function validateString(string &$str): true|Errors
+    public function validateString(string &$str): true|Errors
     {
         $len = $this->mb
             ? mb_strlen($str, $this->mb_encoding)

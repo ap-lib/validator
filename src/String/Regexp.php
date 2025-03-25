@@ -21,7 +21,7 @@ class Regexp extends AbstractString
     {
     }
 
-    final public function validateString(string &$str): true|Errors
+    public function validateString(string &$str): true|Errors
     {
         if (preg_match($this->pattern, $str)) {
             return true;

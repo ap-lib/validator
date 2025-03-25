@@ -22,7 +22,7 @@ class DateFormat extends AbstractString
     {
     }
 
-    final public function validateString(string &$str): true|Errors
+    public function validateString(string &$str): true|Errors
     {
         if (DateTimeImmutable::createFromFormat($this->format, $str) === false) {
             return Errors::one($this->message, [

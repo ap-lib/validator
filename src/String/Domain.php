@@ -23,7 +23,7 @@ class Domain extends AbstractString
     {
     }
 
-    final public function validateString(string &$str): true|Errors
+    public function validateString(string &$str): true|Errors
     {
         return filter_var($str, FILTER_VALIDATE_DOMAIN, $this->options)
             ? true
