@@ -22,6 +22,7 @@ class Password extends AbstractString
         public string $message_length_min = "Must be at least '{min}' characters long",
         public string $message_length_max = "Must be no more than {max} bytes (Non-latin characters may count as more than one byte)",
         public string $message_start_end_whitespace = "Cannot start or end with whitespace",
+        public string $message_not_contain_null_character = "Must not contain null character",
         public string $message_require_upper = "Must contain at least one uppercase Latin letter",
         public string $message_require_lower = "Must contain at least one lowercase Latin letter",
         public string $message_require_digit = "Must contain at least one digit",
@@ -41,6 +42,10 @@ class Password extends AbstractString
 
         if ($len > $this->max_length) {
             $errors[] = new Error($this->message_length_max, context: ["max" => $this->max_length]);
+        }
+
+        if (str_contains($str, "\0")) {
+            $errors[] = new Error($this->message_not_contain_null_character);
         }
 
         if ($this->validate_spaces && $str !== trim($str)) {
