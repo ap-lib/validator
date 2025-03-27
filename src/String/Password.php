@@ -9,9 +9,11 @@ use Attribute;
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
 class Password extends AbstractString
 {
+    const int MAX_LENGTH_RECOMMENDED_FOR_BCRYPT = 72;
+
     public function __construct(
-        public int    $min_length = 12,
-        public int    $max_length = 72,
+        public int    $min_length,
+        public int    $max_length = self::MAX_LENGTH_RECOMMENDED_FOR_BCRYPT,
         public bool   $validate_spaces = true,
         public bool   $require_upper = true,
         public bool   $require_lower = true,
