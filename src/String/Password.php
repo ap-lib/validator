@@ -12,6 +12,7 @@ class Password extends AbstractString
     public function __construct(
         public int    $min_length = 12,
         public int    $max_length = 72,
+        public bool   $validate_spaces = true,
         public bool   $require_upper = true,
         public bool   $require_lower = true,
         public bool   $require_digit = true,
@@ -40,7 +41,7 @@ class Password extends AbstractString
             $errors[] = new Error($this->message_length_max, context: ["max" => $this->max_length]);
         }
 
-        if ($str !== trim($str)) {
+        if ($this->validate_spaces && $str !== trim($str)) {
             $errors[] = new Error($this->message_start_end_whitespace);
         }
 
