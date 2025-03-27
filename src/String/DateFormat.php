@@ -3,6 +3,7 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidateExceptionTrait;
 use Attribute;
 use DateTimeImmutable;
 

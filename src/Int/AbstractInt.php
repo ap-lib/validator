@@ -3,10 +3,13 @@
 namespace AP\Validator\Int;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidateExceptionTrait;
 use AP\Validator\ValidatorInterface;
 
 abstract class AbstractInt implements ValidatorInterface
 {
+    use ValidateExceptionTrait;
+
     /**
      * @param object $val
      * @return true|Errors
