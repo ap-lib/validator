@@ -3,7 +3,6 @@
 namespace AP\Validator\Object;
 
 
-use AP\Context\ContextForObject;
 use AP\Context\ContextForObjectInterface;
 use AP\ErrorNode\Errors;
 use AP\Scheme\Validation;
@@ -11,10 +10,8 @@ use AP\Validator\ValidatorInterface;
 use Error;
 use ReflectionClass;
 
-class ObjectWithContextValidator extends AbstractObject implements ContextForObjectInterface
+class ObjectWithContextValidator extends AbstractObject
 {
-    use ContextForObject;
-
     /**
      * @param object $obj
      * @param array $path
@@ -22,6 +19,10 @@ class ObjectWithContextValidator extends AbstractObject implements ContextForObj
      */
     public function validateObject(object &$obj, array $path = []): true|Errors
     {
+        $context = $obj instanceof ContextForObjectInterface
+            ? $obj->getContext()
+            : null;
+
         $errors = [];
 
         $reflection = new ReflectionClass($obj);
@@ -40,8 +41,8 @@ class ObjectWithContextValidator extends AbstractObject implements ContextForObj
 
             // element implement Validation scheme
             if ($obj->$name instanceof Validation) {
-                if (!is_null($this->_context) && $obj->$name instanceof ContextForObjectInterface) {
-                    $obj->$name->setContext($this->_context);
+                if (!is_null($context) && $obj->$name instanceof ContextForObjectInterface) {
+                    $obj->$name->setContext($context);
                 }
 
                 $validateRes = $obj->$name->isValid($obj->$name);
@@ -58,8 +59,8 @@ class ObjectWithContextValidator extends AbstractObject implements ContextForObj
                 if (is_subclass_of($attribute->getName(), ValidatorInterface::class)) {
                     $validator = $attribute->newInstance();
                     if ($validator instanceof ValidatorInterface) {
-                        if (!is_null($this->_context) && $validator instanceof ContextForObjectInterface) {
-                            $validator->setContext($this->_context);
+                        if (!is_null($context) && $validator instanceof ContextForObjectInterface) {
+                            $validator->setContext($context);
                         }
                         try {
                             $validateRes = $validator->validate($obj->$name);
