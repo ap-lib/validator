@@ -28,8 +28,8 @@ class ObjectWithContextValidator extends AbstractObject
         $reflection = new ReflectionClass($obj);
 
         foreach ($reflection->getProperties() as $property) {
-            // skip no public
-            if (!$property->isPublic()) {
+            // skip no public and no initialized
+            if (!$property->isPublic() || !$property->isInitialized($obj)) {
                 continue;
             }
 
