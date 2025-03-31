@@ -3,17 +3,17 @@
 namespace AP\Validator\Object;
 
 
+use AP\Context\ContextForObject;
+use AP\Context\ContextForObjectInterface;
 use AP\ErrorNode\Errors;
 use AP\Scheme\Validation;
 use AP\Validator\ValidatorInterface;
-use AP\Validator\ValidatorWithContext;
-use AP\Validator\ValidatorWithContextInterface;
 use Error;
 use ReflectionClass;
 
-class ObjectValidatorWithContext extends AbstractObject implements ValidatorWithContextInterface
+class ObjectWithContextValidator extends AbstractObject implements ContextForObjectInterface
 {
-    use ValidatorWithContext;
+    use ContextForObject;
 
     /**
      * @param object $obj
@@ -40,7 +40,7 @@ class ObjectValidatorWithContext extends AbstractObject implements ValidatorWith
 
             // element implement Validation scheme
             if ($obj->$name instanceof Validation) {
-                if (!is_null($this->_context) && $obj->$name instanceof ValidatorWithContextInterface) {
+                if (!is_null($this->_context) && $obj->$name instanceof ContextForObjectInterface) {
                     $obj->$name->setContext($this->_context);
                 }
 
@@ -58,6 +58,9 @@ class ObjectValidatorWithContext extends AbstractObject implements ValidatorWith
                 if (is_subclass_of($attribute->getName(), ValidatorInterface::class)) {
                     $validator = $attribute->newInstance();
                     if ($validator instanceof ValidatorInterface) {
+                        if (!is_null($this->_context) && $obj->$name instanceof ContextForObjectInterface) {
+                            $obj->$name->setContext($this->_context);
+                        }
                         try {
                             $validateRes = $validator->validate($obj->$name);
                         } catch (Error $e) {
