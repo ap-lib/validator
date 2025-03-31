@@ -58,8 +58,8 @@ class ObjectWithContextValidator extends AbstractObject implements ContextForObj
                 if (is_subclass_of($attribute->getName(), ValidatorInterface::class)) {
                     $validator = $attribute->newInstance();
                     if ($validator instanceof ValidatorInterface) {
-                        if (!is_null($this->_context) && $obj->$name instanceof ContextForObjectInterface) {
-                            $obj->$name->setContext($this->_context);
+                        if (!is_null($this->_context) && $validator instanceof ContextForObjectInterface) {
+                            $validator->setContext($this->_context);
                         }
                         try {
                             $validateRes = $validator->validate($obj->$name);
