@@ -9,8 +9,6 @@ use Attribute;
 class ListOfIntegers extends AbstractArray
 {
     public function __construct(
-        public ?int   $min = null,
-        public ?int   $max = null,
         public string $message = "all elements must be integers",
     )
     {
