@@ -17,7 +17,7 @@ class UserAgent extends AbstractString
      */
     public function __construct(
         public string $message = "value is not a valid User-Agent",
-        public int    $min_length = 0,
+        public int    $min_length = 1,
         public int    $max_length = 1000
     )
     {
