@@ -32,7 +32,7 @@ class UserAgent extends AbstractString
         }
 
         // Allow visible printable characters only (ASCII range 32–126)
-        if (!preg_match('/^[\x20-\x7E]+$/', $str)) {
+        if (!preg_match('/^[\x20-\x7E]*$/', $str)) {
             return Errors::one($this->message);
         }
 
