@@ -1,16 +1,16 @@
 <?php
 
-namespace AP\Validator\Int;
+namespace AP\Validator\Float;
 
 use AP\ErrorNode\Errors;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Between extends AbstractInt
+class Between extends AbstractFloat
 {
     public function __construct(
-        public ?int   $min = null,
-        public ?int   $max = null,
+        public ?float $min = null,
+        public ?float $max = null,
         public string $message_between = "must be between '{min}' and '{max}'",
         public string $message_only_min = "must be equal or greater then '{min}'",
         public string $message_only_max = "must be equal or less then '{max}'",
@@ -18,22 +18,22 @@ class Between extends AbstractInt
     {
     }
 
-    final public function validateInt(int &$int): true|Errors
+    final public function validateFloat(float &$float): true|Errors
     {
-        if (is_int($this->min) && is_int($this->max) && ($int < $this->min || $int > $this->max)) {
+        if (is_float($this->min) && is_float($this->max) && ($float < $this->min || $float > $this->max)) {
             return Errors::one($this->message_between, [
                 "min" => $this->min,
                 "max" => $this->max,
             ]);
         }
 
-        if (is_int($this->min) && $int < $this->min) {
+        if (is_float($this->min) && $float < $this->min) {
             return Errors::one($this->message_only_min, [
                 "min" => $this->min,
             ]);
         }
 
-        if (is_int($this->max) && $int > $this->max) {
+        if (is_float($this->max) && $float > $this->max) {
             return Errors::one($this->message_only_max, [
                 "max" => $this->max,
             ]);
