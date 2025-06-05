@@ -18,7 +18,7 @@ abstract class AbstractInt implements ValidatorInterface
     {
         return is_int($val)
             ? $this->validateInt($val)
-            : Errors::one("must be a object");
+            : Errors::one("must be a float");
     }
 
     abstract public function validateInt(int &$int): true|Errors;
