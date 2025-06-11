@@ -3,7 +3,6 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
-use AP\Validator\ValidateExceptionTrait;
 use Attribute;
 use DateTimeImmutable;
 
@@ -25,7 +24,8 @@ class DateFormat extends AbstractString
 
     public function validateString(string &$str): true|Errors
     {
-        if (DateTimeImmutable::createFromFormat($this->format, $str) === false) {
+        $dt = DateTimeImmutable::createFromFormat($this->format, $str);
+        if ($dt === false || $dt->format($this->format) != $str) {
             return Errors::one($this->message, [
                 "format" => $this->format,
             ]);
