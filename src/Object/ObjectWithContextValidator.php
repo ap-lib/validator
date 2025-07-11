@@ -65,7 +65,7 @@ class ObjectWithContextValidator extends AbstractObject
                         try {
                             $validateRes = $validator->validate($obj->$name);
                         } catch (Error $e) {
-                            if (str_starts_with($e->getMessage(), "Cannot modify readonly property")) {
+                            if (str_contains($e->getMessage(), "readonly property")) {
                                 $v1          = $v2 = $obj->$name;
                                 $validateRes = $validator->validate($v1);
                                 if ($v1 != $v2) {
