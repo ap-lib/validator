@@ -3,10 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Domain extends AbstractString
+class Domain extends AbstractString implements ValidatorOpenAPIInterface
 {
     /**
      * Validates whether the domain name is valid according to » RFC 952, » RFC 1034, » RFC 1035, » RFC 1123,
@@ -28,5 +29,11 @@ class Domain extends AbstractString
         return filter_var($str, FILTER_VALIDATE_DOMAIN, $this->options)
             ? true
             : Errors::one($this->message);
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        $spec['format'] = 'hostname';
+        return $spec;
     }
 }

@@ -3,10 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Url extends AbstractString
+class Url extends AbstractString implements ValidatorOpenAPIInterface
 {
     /**
      * Validates whether the URL name is valid according to » RFC 2396
@@ -40,5 +41,11 @@ class Url extends AbstractString
             }
         }
         return true;
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        $spec['format'] = 'uri';
+        return $spec;
     }
 }

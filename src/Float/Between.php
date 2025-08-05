@@ -3,10 +3,11 @@
 namespace AP\Validator\Float;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Between extends AbstractFloat
+class Between extends AbstractFloat implements ValidatorOpenAPIInterface
 {
     public function __construct(
         public ?float $min = null,
@@ -40,5 +41,16 @@ class Between extends AbstractFloat
         }
 
         return true;
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        if (is_int($this->min)) {
+            $spec['minimum'] = $this->min;
+        }
+        if (is_int($this->max)) {
+            $spec['maximum'] = $this->max;
+        }
+        return $spec;
     }
 }

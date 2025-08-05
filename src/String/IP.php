@@ -3,10 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class IP extends AbstractString
+class IP extends AbstractString implements ValidatorOpenAPIInterface
 {
     /**
      * Validates an IP address.
@@ -27,5 +28,11 @@ class IP extends AbstractString
         return filter_var($str, FILTER_VALIDATE_IP, $this->options)
             ? true
             : Errors::one($this->message);
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        $spec['format'] = 'ip';
+        return $spec;
     }
 }

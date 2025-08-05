@@ -3,11 +3,12 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 use DateTimeImmutable;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class DateFormat extends AbstractString
+class DateFormat extends AbstractString implements ValidatorOpenAPIInterface
 {
     /**
      * @param string $format The expected date format.
@@ -31,5 +32,11 @@ class DateFormat extends AbstractString
             ]);
         }
         return true;
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        $spec['format'] = 'date';
+        return $spec;
     }
 }

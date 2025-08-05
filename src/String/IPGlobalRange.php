@@ -2,10 +2,11 @@
 
 namespace AP\Validator\String;
 
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class IPGlobalRange extends IP
+class IPGlobalRange extends IP implements ValidatorOpenAPIInterface
 {
     /**
      * Validates an IP address that belongs to the global range.
@@ -24,5 +25,11 @@ class IPGlobalRange extends IP
             $message,
             $options | FILTER_FLAG_GLOBAL_RANGE
         );
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        $spec['format'] = 'ip';
+        return $spec;
     }
 }

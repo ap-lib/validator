@@ -3,10 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Email extends AbstractString
+class Email extends AbstractString implements ValidatorOpenAPIInterface
 {
     /**
      * Validates whether the value is a "valid" e-mail address.
@@ -29,5 +30,11 @@ class Email extends AbstractString
         return filter_var($str, FILTER_VALIDATE_EMAIL, $this->options)
             ? true
             : Errors::one($this->message);
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        $spec['format'] = 'email';
+        return $spec;
     }
 }

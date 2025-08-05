@@ -3,10 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class UserAgent extends AbstractString
+class UserAgent extends AbstractString implements ValidatorOpenAPIInterface
 {
     /**
      * Validates a user agent string.
@@ -18,7 +19,8 @@ class UserAgent extends AbstractString
     public function __construct(
         public string $message = "value is not a valid User-Agent",
         public int    $min_length = 1,
-        public int    $max_length = 1000
+        public int    $max_length = 1000,
+        public string $spec_description = 'Standard HTTP User-Agent string',
     )
     {
     }
@@ -37,5 +39,13 @@ class UserAgent extends AbstractString
         }
 
         return true;
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        $spec['description'] = $this->spec_description;
+        $spec['minLength']   = $this->max_length;
+        $spec['maxLength']   = $this->max_length;
+        return $spec;
     }
 }

@@ -4,10 +4,11 @@ namespace AP\Validator\String;
 
 use AP\ErrorNode\Error;
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Password extends AbstractString
+class Password extends AbstractString implements ValidatorOpenAPIInterface
 {
     const int MAX_LENGTH_RECOMMENDED_FOR_BCRYPT = 72;
 
@@ -71,5 +72,11 @@ class Password extends AbstractString
         return empty($errors)
             ? true
             : new Errors($errors);
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        $spec['format'] = 'password';
+        return $spec;
     }
 }

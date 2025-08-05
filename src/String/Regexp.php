@@ -3,10 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Regexp extends AbstractString
+class Regexp extends AbstractString implements ValidatorOpenAPIInterface
 {
     /**
      * @param string $pattern The regular expression pattern to validate the input
@@ -32,5 +33,11 @@ class Regexp extends AbstractString
                 ? ["pattern" => $this->pattern]
                 : []
         );
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+
+        return $spec;
     }
 }

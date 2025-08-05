@@ -3,10 +3,11 @@
 namespace AP\Validator\Int;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Between extends AbstractInt
+class Between extends AbstractInt implements ValidatorOpenAPIInterface
 {
     public function __construct(
         public ?int   $min = null,
@@ -40,5 +41,16 @@ class Between extends AbstractInt
         }
 
         return true;
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        if (is_int($this->min)) {
+            $spec['minimum'] = $this->min;
+        }
+        if (is_int($this->max)) {
+            $spec['maximum'] = $this->max;
+        }
+        return $spec;
     }
 }
