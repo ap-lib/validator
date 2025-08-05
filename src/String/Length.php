@@ -3,10 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
+use AP\Validator\ValidatorOpenAPIInterface;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Length extends AbstractString
+class Length extends AbstractString implements ValidatorOpenAPIInterface
 {
     public function __construct(
         public ?int    $min = null,
@@ -46,5 +47,16 @@ class Length extends AbstractString
         }
 
         return true;
+    }
+
+    public function updateOpenAPIElement(array $spec): array
+    {
+        if (is_int($this->min)) {
+            $spec['minLength'] = $this->min;
+        }
+        if (is_int($this->max)) {
+            $spec['maxLength'] = $this->max;
+        }
+        return $spec;
     }
 }
