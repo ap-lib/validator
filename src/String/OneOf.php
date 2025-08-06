@@ -36,13 +36,6 @@ class OneOf extends AbstractString implements OpenAPIModificator
     public function updateOpenAPIElement(array $spec): array
     {
         $spec['enum']    = $this->options;
-        $spec['options'] = [];
-        foreach ($this->options as $option) {
-            $spec['options'][] = [
-                'value' => $option,
-                'label' => $option,
-            ];
-        }
         return $spec;
     }
 }
