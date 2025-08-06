@@ -4,11 +4,11 @@ namespace AP\Validator\String;
 
 use AP\ErrorNode\Error;
 use AP\ErrorNode\Errors;
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Password extends AbstractString implements ValidatorOpenAPIInterface
+class Password extends AbstractString implements OpenAPIModificator
 {
     const int MAX_LENGTH_RECOMMENDED_FOR_BCRYPT = 72;
 

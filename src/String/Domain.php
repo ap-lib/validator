@@ -3,11 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Domain extends AbstractString implements ValidatorOpenAPIInterface
+class Domain extends AbstractString implements OpenAPIModificator
 {
     /**
      * Validates whether the domain name is valid according to » RFC 952, » RFC 1034, » RFC 1035, » RFC 1123,

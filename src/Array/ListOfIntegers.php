@@ -3,11 +3,11 @@
 namespace AP\Validator\Array;
 
 use AP\ErrorNode\Errors;
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class ListOfIntegers extends AbstractArray implements ValidatorOpenAPIInterface
+class ListOfIntegers extends AbstractArray implements OpenAPIModificator
 {
     public function __construct(
         public string $message = "all elements must be integers",

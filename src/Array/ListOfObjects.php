@@ -4,12 +4,12 @@ namespace AP\Validator\Array;
 
 use AP\ErrorNode\Errors;
 use AP\Scheme\OpenAPI;
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 use RuntimeException;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class ListOfObjects extends AbstractArray implements ValidatorOpenAPIInterface
+class ListOfObjects extends AbstractArray implements OpenAPIModificator
 {
     /**
      * @param string $class
@@ -37,7 +37,7 @@ class ListOfObjects extends AbstractArray implements ValidatorOpenAPIInterface
 
     public function updateOpenAPIElement(array $spec): array
     {
-        if (is_subclass_of($this->class, OpenAPI::class)) {
+        if (!is_subclass_of($this->class, OpenAPI::class)) {
             throw new RuntimeException(
                 '`%s` must implement `%s`',
                 $this->class,

@@ -2,11 +2,11 @@
 
 namespace AP\Validator\String;
 
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class IPGlobalRange extends IP implements ValidatorOpenAPIInterface
+class IPGlobalRange extends IP implements OpenAPIModificator
 {
     /**
      * Validates an IP address that belongs to the global range.

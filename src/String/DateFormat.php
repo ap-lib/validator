@@ -3,12 +3,12 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 use DateTimeImmutable;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class DateFormat extends AbstractString implements ValidatorOpenAPIInterface
+class DateFormat extends AbstractString implements OpenAPIModificator
 {
     /**
      * @param string $format The expected date format.

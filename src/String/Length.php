@@ -3,11 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Length extends AbstractString implements ValidatorOpenAPIInterface
+class Length extends AbstractString implements OpenAPIModificator
 {
     public function __construct(
         public ?int    $min = null,

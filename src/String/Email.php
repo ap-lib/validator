@@ -3,11 +3,11 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Email extends AbstractString implements ValidatorOpenAPIInterface
+class Email extends AbstractString implements OpenAPIModificator
 {
     /**
      * Validates whether the value is a "valid" e-mail address.

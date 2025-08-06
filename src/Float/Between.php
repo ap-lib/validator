@@ -3,11 +3,11 @@
 namespace AP\Validator\Float;
 
 use AP\ErrorNode\Errors;
-use AP\Validator\ValidatorOpenAPIInterface;
+use AP\Scheme\OpenAPIModificator;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
-class Between extends AbstractFloat implements ValidatorOpenAPIInterface
+class Between extends AbstractFloat implements OpenAPIModificator
 {
     public function __construct(
         public ?float $min = null,
