@@ -3,8 +3,8 @@
 namespace AP\Validator\Array;
 
 use AP\ErrorNode\Errors;
+use AP\OpenAPIPlus\OpenAPIModificator;
 use AP\Scheme\OpenAPI;
-use AP\Scheme\OpenAPIModificator;
 use Attribute;
 use RuntimeException;
 

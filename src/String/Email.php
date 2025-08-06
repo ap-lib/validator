@@ -3,7 +3,7 @@
 namespace AP\Validator\String;
 
 use AP\ErrorNode\Errors;
-use AP\Scheme\OpenAPIModificator;
+use AP\OpenAPIPlus\OpenAPIModificator;
 use Attribute;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_METHOD | Attribute::TARGET_PROPERTY)]
